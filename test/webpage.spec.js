@@ -120,6 +120,19 @@ describe('page', function () {
                 }, 2, 2);
             });
         });
+        it('should evaluate and return object', function (done) {
+            phantomProxy.create({"debug":true}, function (proxy) {
+                should.exist(proxy.page);
+                proxy.page.evaluate(function (x, y) {
+                    return( { sum: x + y, product: x * y, difference: x - y } );
+                }, function (result) {
+                    assert.equal(result.sum, 4);
+                    assert.equal(result.product, 4);
+                    assert.equal(result.difference, 0);
+                    done();
+                }, 2, 2);
+            });
+        });
         it('should evaluate async', function (done) {
             phantomProxy.create({"debug":true}, function (proxy) {
                 should.exist(proxy.page);
